@@ -22,7 +22,7 @@ After selecting a shelf to place the tools in, right click on the shelf tab or o
 In the new window select the "Tools" tab and scroll down the list. All my tools are prefixed with "MB" so they should show up there.
 Simply select the tool you want in the shelf and click "Apply" and then "Accept" and the tool should be ready for use.
 
-##Usage:
+## Usage:
 
 Too use the tool simply click the shelf tool button, then select the rop to copy the AOV's from in the first pop-up, click accept, then select the ROP's to copy too in the next pop-up and finally click accept.
 
