@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shelfDocument>
+  <!-- This file contains definitions of shelves, toolbars, and tools.
+ It should not be hand-edited when it is being used by the application.
+ Note, that two definitions of the same element are not allowed in
+ a single file. -->
+
+  <tool name="MB_rs_aov_transfer" label="MB Copy RS AOV's" icon="ROP_Redshift_ROP">
+    <script scriptType="python"><![CDATA[#read user input with multiple node selectors
+
+filter = hou.nodeTypeFilter.Rop
+
+sourceraw = hou.ui.selectNode(node_type_filter=filter, title="Select ROP to copy from:", multiple_select=False)
+
+source = hou.node(sourceraw)
+
+print('Source Node:')
+print(sourceraw)
+
+if(sourceraw != None):
+    targets = hou.ui.selectNode(node_type_filter=filter, title="Select ROP to copy too:", multiple_select=True)
+    
+    print('Target Nodes:')
+    print(targets)
+    
+    for targetraw in targets:
+        target = hou.node(targetraw)
+        
+        num = source.parm('RS_aov').eval()
+        
+        
+        for i in range(num):
+            #####READ#####
+            
+            type = source.parm('RS_aovID_'+str(i+1)).eval()
+            name = source.parm('RS_aovSuffix_'+str(i+1)).eval()
+            
+            #Common Tab
+            prefix = source.parm('RS_aovCustomPrefix_'+str(i+1)).eval()
+            dt = source.parm('RS_aovCustomDT_'+str(i+1)).eval()
+            bits = source.parm('RS_aovBits_'+str(i+1)).eval()
+            custcompr = source.parm('RS_aovCustomCompr_'+str(i+1)).eval()
+            exrcompr = source.parm('RS_aovExrCompr_'+str(i+1)).eval()
+            
+            #Custom Tab
+            custshader = source.parm('RS_aovCustomShader_'+str(i+1)).eval()
+            secrayvis = source.parm('RS_aovCustomSecRayV_'+str(i+1)).eval()
+            colorproc = source.parm('RS_aovCustomCP_'+str(i+1)).eval()
+            
+            #Material
+            matcolorproc = source.parm('RS_aovMaterialCP_'+str(i+1)).eval()
+            matsecrayvis = source.parm('RS_aovMaterialSecRayV_'+str(i+1)).eval()
+            matdenoise = source.parm('RS_aovMaterialDenoise_'+str(i+1)).eval()
+            
+            #Light Groups
+            lightglobal = source.parm('RS_aovLightGlobal_'+str(i+1)).eval()
+            alllightgrps = source.parm('RS_aovLightAllGroups_'+str(i+1)).eval()
+            lightgrpslist = source.parm('RS_aovLightGroups_'+str(i+1)).eval()
+            
+            #World pos
+            wpfilter = source.parm('RS_aovWorldFilter_'+str(i+1)).eval()
+            wpscalex = source.parm('RS_aovWorldScale_'+str(i+1)+'x').eval()
+            wpscaley = source.parm('RS_aovWorldScale_'+str(i+1)+'y').eval()
+            wpscalez = source.parm('RS_aovWorldScale_'+str(i+1)+'z').eval()
+            wpenvray = source.parm('RS_aovWorldEnvRays_'+str(i+1)).eval()
+            
+            #Z depth
+            zfilter = source.parm('RS_aovDeepFilter_'+str(i+1)).eval()
+            zmode = source.parm('RS_aovDeepMode_'+str(i+1)).eval()
+            znearfar = source.parm('RS_aovDeepNearFar_'+str(i+1)).eval()
+            zmindepth = source.parm('RS_aovDeepMinD_'+str(i+1)).eval()
+            zmaxdepth = source.parm('RS_aovDeepMaxD_'+str(i+1)).eval()
+            zenvrays = source.parm('RS_aovDeepEnvRays_'+str(i+1)).eval()
+            
+            #Motion Vector
+            mvraw = source.parm('RS_aovMotionRaw_'+str(i+1)).eval()
+            mvclamp = source.parm('RS_aovMotionClamp_'+str(i+1)).eval()
+            mvmax = source.parm('RS_aovMotionMax_'+str(i+1)).eval()
+            mvoutmin = source.parm('RS_aovMotionOutMin_'+str(i+1)).eval()
+            mvoutmax = source.parm('RS_aovMotionOutMax_'+str(i+1)).eval()
+            mvfilter = source.parm('RS_aovMotionFilter_'+str(i+1)).eval()
+            
+            #Puzzle Matte
+            pmmode = source.parm('RS_aovPuzzleMode_'+str(i+1)).eval()
+            pmred = source.parm('RS_aovPuzzleRed_'+str(i+1)).eval()
+            pmgreen = source.parm('RS_aovPuzzleGreen_'+str(i+1)).eval()
+            pmblue = source.parm('RS_aovPuzzleBlue_'+str(i+1)).eval()
+            pmrefl = source.parm('RS_aovPuzzleRef_'+str(i+1)).eval()
+            
+            #Object ID
+            oidscale = source.parm('RS_aovObjectScale_'+str(i+1)).eval()
+            
+            #Cryptomatte
+            cmid = source.parm('RS_aovCryptomatteType_'+str(i+1)).eval()
+            cmdepth = source.parm('RS_aovCryptomatteDepth_'+str(i+1)).eval()
+        
+            
+            
+            
+            
+            #####WRITE#####
+            
+            
+            
+            
+            
+            target.parm('RS_aov').set(num)
+        
+            target.parm('RS_aovID_'+str(i+1)).set(type)
+            target.parm('RS_aovSuffix_'+str(i+1)).set(name)
+            
+            #Common Tab
+            target.parm('RS_aovCustomPrefix_'+str(i+1)).set(prefix)
+            target.parm('RS_aovCustomDT_'+str(i+1)).set(dt)
+            target.parm('RS_aovBits_'+str(i+1)).set(bits)
+            target.parm('RS_aovCustomCompr_'+str(i+1)).set(custcompr)
+            target.parm('RS_aovExrCompr_'+str(i+1)).set(exrcompr)
+            
+            #Custom Tab
+            target.parm('RS_aovCustomShader_'+str(i+1)).set(custshader)
+            target.parm('RS_aovCustomSecRayV_'+str(i+1)).set(secrayvis)
+            target.parm('RS_aovCustomCP_'+str(i+1)).set(colorproc)
+            
+            #Material
+            target.parm('RS_aovMaterialCP_'+str(i+1)).set(matcolorproc)
+            target.parm('RS_aovMaterialSecRayV_'+str(i+1)).set(matsecrayvis)
+            target.parm('RS_aovMaterialDenoise_'+str(i+1)).set(matdenoise)
+            
+            #Light Groups
+            target.parm('RS_aovLightGlobal_'+str(i+1)).set(lightglobal)
+            target.parm('RS_aovLightAllGroups_'+str(i+1)).set(alllightgrps)
+            target.parm('RS_aovLightGroups_'+str(i+1)).set(lightgrpslist)
+            
+            #World pos
+            target.parm('RS_aovWorldFilter_'+str(i+1)).set(wpfilter)
+            target.parm('RS_aovWorldScale_'+str(i+1)+'x').set(wpscalex)
+            target.parm('RS_aovWorldScale_'+str(i+1)+'y').set(wpscaley)
+            target.parm('RS_aovWorldScale_'+str(i+1)+'z').set(wpscalez)
+            target.parm('RS_aovWorldEnvRays_'+str(i+1)).set(wpenvray)
+            
+            #Z depth
+            target.parm('RS_aovDeepFilter_'+str(i+1)).set(zfilter)
+            target.parm('RS_aovDeepMode_'+str(i+1)).set(zmode)
+            target.parm('RS_aovDeepNearFar_'+str(i+1)).set(znearfar)
+            target.parm('RS_aovDeepMinD_'+str(i+1)).set(zmindepth)
+            target.parm('RS_aovDeepMaxD_'+str(i+1)).set(zmaxdepth)
+            target.parm('RS_aovDeepEnvRays_'+str(i+1)).set(zenvrays)
+            
+            #Motion Vector
+            target.parm('RS_aovMotionRaw_'+str(i+1)).set(mvraw)
+            target.parm('RS_aovMotionClamp_'+str(i+1)).set(mvclamp)
+            target.parm('RS_aovMotionMax_'+str(i+1)).set(mvmax)
+            target.parm('RS_aovMotionOutMin_'+str(i+1)).set(mvoutmin)
+            target.parm('RS_aovMotionOutMax_'+str(i+1)).set(mvoutmax)
+            target.parm('RS_aovMotionFilter_'+str(i+1)).set(mvfilter)
+            
+            #Puzzle Matte
+            target.parm('RS_aovPuzzleMode_'+str(i+1)).set(pmmode)
+            target.parm('RS_aovPuzzleRed_'+str(i+1)).set(pmred)
+            target.parm('RS_aovPuzzleGreen_'+str(i+1)).set(pmgreen)
+            target.parm('RS_aovPuzzleBlue_'+str(i+1)).set(pmblue)
+            target.parm('RS_aovPuzzleRef_'+str(i+1)).set(pmrefl)
+            
+            #Object ID
+            target.parm('RS_aovObjectScale_'+str(i+1)).set(oidscale)
+            
+            #Cryptomatte
+            target.parm('RS_aovCryptomatteType_'+str(i+1)).set(cmid)
+            target.parm('RS_aovCryptomatteDepth_'+str(i+1)).set(cmdepth)
+        ]]></script>
+  </tool>
+</shelfDocument>
