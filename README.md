@@ -3,6 +3,8 @@ A toolbar tool created to simplify the transfe of redshift AOV's from one ROP to
 
 NOTE: This tool was developed/tested with Redshift 3.0.1 for Houdini 18.0.480. It should work for other versions but if any of the AOV's names or variable names have changed then the tool will not be able to pick them up.
 
+Video overview: https://vimeo.com/446105260
+
 
 ## Instalation:
 
